@@ -3,7 +3,7 @@
 ## Application Description
 This application utilizes mysql to manipulate tables table within a database. The user can add role, departments, and employees to an existing database as well as update the employee roles and view preset tables.
 
-![walkthrough](https://watch.screencastify.com/v/LE5LC6OE4FmNRYeEi23r)
+[!walkthrough](https://watch.screencastify.com/v/fj7RiGD8iRUwZd3skdWv)
 
 ## Table of Contents
 * [Description](#application-description)
