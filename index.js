@@ -68,11 +68,11 @@ const task = () => {
       }
     });
 };
-
+// function to add new departments
 const addDep = () => {
   db.query(`SELECT * FROM department`, (err, rows) => {
     if (err) throw err;
-
+    // for loop to update departments array
     for (let i = 0; i < rows.length; i++) {
       const newDep = { name: rows[i].name, value: rows[i].id };
       deps.push(newDep);
@@ -89,7 +89,7 @@ const addDep = () => {
       ])
       .then((answers) => {
         console.log(answers);
-
+        // add the new department to the department table
         db.query(`INSERT INTO department SET ?`, answers, (err, rows) => {
           if (err) throw err;
           console.log("Success!");
@@ -98,17 +98,19 @@ const addDep = () => {
       });
   });
 };
+// function to add new roles
 const addRole = () => {
   db.query(`SELECT * FROM department`, (err, rows) => {
     if (err) throw err;
+    // for loop to get complete department array
     for (let i = 0; i < rows.length; i++) {
       const newDep = { name: rows[i].name, value: rows[i].id };
       deps.push(newDep);
     }
-
+    
     db.query(`SELECT * FROM roles`, (err, rows) => {
       if (err) throw err;
-
+      // for loop to get complete roles array
       for (let i = 0; i < rows.length; i++) {
         const newRole = { name: rows[i].title, value: rows[i].id };
         role.push(newRole);
@@ -137,7 +139,7 @@ const addRole = () => {
         ])
         .then((answers) => {
           console.log(answers);
-
+          // add new role to the roles table
           db.query(`INSERT INTO roles SET ?`, answers, (err, rows) => {
             if (err) throw err;
             console.log("Success!");
@@ -147,10 +149,11 @@ const addRole = () => {
     });
   });
 };
+// function to add new employee
 const addEmp = () => {
   db.query(`SELECT * FROM employees`, (err, rows) => {
     if (err) throw err;
-
+    // for loop to get the manager/employees array
     for (let i = 0; i < rows.length; i++) {
       const newMan = { name: rows[i].first_name, value: rows[i].id };
       mans.push(newMan);
@@ -159,7 +162,7 @@ const addEmp = () => {
 
     db.query(`SELECT * FROM roles`, (err, rows) => {
       if (err) throw err;
-
+      // for loop to get the employee roles array
       for (let i = 0; i < rows.length; i++) {
         const newEmp = { name: rows[i].title, value: rows[i].id };
         emps.push(newEmp);
@@ -193,7 +196,7 @@ const addEmp = () => {
         ])
         .then((answers) => {
           console.log(answers);
-
+          // add employee to employees table
           db.query(`INSERT INTO employees SET ?`, answers, (err, rows) => {
             if (err) throw err;
             console.log("Success!");
@@ -203,10 +206,11 @@ const addEmp = () => {
     });
   });
 };
+//function to udate role of current employee
 const empUpdate = () => {
   db.query(`SELECT * FROM employees`, (err, rows) => {
     if (err) throw err;
-
+    // for loop to get employee names
     for (let i = 0; i < rows.length; i++) {
       const newArr = { name: rows[i].first_name, value: rows[i].id };
       mans.push(newArr);
@@ -214,7 +218,7 @@ const empUpdate = () => {
     //console.log(emps);
     db.query(`SELECT * FROM roles`, (err, rows) => {
       if (err) throw err;
-
+      // for loop to get employee roles
       for (let i = 0; i < rows.length; i++) {
         const newEmp = { name: rows[i].title, value: rows[i].id };
         emps.push(newEmp);
@@ -241,6 +245,7 @@ const empUpdate = () => {
             `SELECT *
           FROM employees`
           );
+          //query to update employee's role 
           db.query(
             `UPDATE employees
           SET role_id= ${answers.role_id}
