@@ -45,8 +45,10 @@ const task = () => {
         );
       } else if (res.action === "view all employees") {
         db.query(
-          `SELECT employees.id, employees.first_name, employees.last_name, roles.title, department.name AS department, roles.salary, employees.manager_id AS manager 
-          FROM employees
+          `SELECT employees.id, employees.first_name, employees.last_name, roles.title, department.name AS department, roles.salary, CONCAT(managers.first_name ," ",managers.last_name) AS manager 
+          FROM employees managers
+          RIGHT JOIN employees
+          ON employees.manager_id=managers.id
           LEFT JOIN roles 
           ON employees.role_id=roles.id
           LEFT JOIN department
@@ -155,7 +157,8 @@ const addEmp = () => {
     if (err) throw err;
     // for loop to get the manager/employees array
     for (let i = 0; i < rows.length; i++) {
-      const newMan = { name: rows[i].first_name, value: rows[i].id };
+      const newMan = { name: rows[i].first_name+" "+rows[i].last_name, value: rows[i].id };
+      // `${rows[i].first_name} ${rows[i].last_name}`
       mans.push(newMan);
       //console.log(mans)
     }
@@ -206,7 +209,7 @@ const addEmp = () => {
     });
   });
 };
-//function to udate role of current employee
+//function to update role of current employee
 const empUpdate = () => {
   db.query(`SELECT * FROM employees`, (err, rows) => {
     if (err) throw err;
